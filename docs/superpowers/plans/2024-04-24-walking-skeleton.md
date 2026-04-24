@@ -100,7 +100,7 @@ git commit -m "feat: implement ETF holdings fetcher with yfinance"
 - Create: `src/ethical_validator/researcher.py`
 - Test: `tests/test_researcher.py`
 
-- [ ] **Step 1: Write failing test for `search_company_news`**
+- [x] **Step 1: Write failing test for `search_company_news`**
 ```python
 # tests/test_researcher.py
 from ethical_validator.researcher import search_company_news
@@ -113,11 +113,11 @@ def test_search_company_news_calls_tavily(mock_tavily):
     assert "Scandal found" in result
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 Run: `pytest tests/test_researcher.py`
 Expected: `ImportError`
 
-- [ ] **Step 3: Implement `search_company_news`**
+- [x] **Step 3: Implement `search_company_news`**
 ```python
 # src/ethical_validator/researcher.py
 import os
@@ -139,11 +139,11 @@ def search_company_news(company: str) -> str:
     return "\n---\n".join([r.get("content", "") for r in results])
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 Run: `pytest tests/test_researcher.py`
 Expected: `PASS`
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 ```bash
 git add src/ethical_validator/researcher.py tests/test_researcher.py
 git commit -m "feat: implement scandal researcher with Tavily"
