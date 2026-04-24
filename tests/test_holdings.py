@@ -1,4 +1,3 @@
-# tests/test_holdings.py
 from ethical_validator.holdings import fetch_top_holdings
 
 def test_fetch_top_holdings_returns_list_of_strings():
