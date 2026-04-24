@@ -15,6 +15,11 @@ A pipeline that detects greenwashing by cross-referencing ETF holdings with real
 3. Rough LLM evaluation for greenwashing/ethics risk.
 4. Output basic report to console.
 
+## Known Limitations & Future Improvements
+- **Data Recency:** `yfinance` holdings data can lag behind official fund reporting (e.g., justETF). 
+    - *Plan:* In a future milestone, investigate scraping official fund manager documents (PDF/CSV) or using a more premium ESG data API.
+- **ISIN Support:** Currently using Ticker symbols; add ISIN resolution in the future.
+
 ## Project Standards
 - Surgical updates to code.
 - Frequent git commits.
