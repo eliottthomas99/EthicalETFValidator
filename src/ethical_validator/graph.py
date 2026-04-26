@@ -2,6 +2,9 @@
 import operator
 from typing import Annotated, List, TypedDict
 
+from langgraph.graph import StateGraph, START, END
+from langgraph.types import Send
+
 from ethical_validator.holdings import fetch_top_holdings
 from ethical_validator.researcher import search_company_news
 from ethical_validator.evaluator import evaluate_esg_risk
@@ -35,8 +38,6 @@ def evaluate_node(state: CompanyState):
     except Exception as e:
         return {"error": str(e)}
 
-from langgraph.graph import StateGraph, START, END
-
 # Compile Sub-Graph
 company_builder = StateGraph(CompanyState)
 company_builder.add_node("research", research_node)
@@ -50,8 +51,6 @@ def process_company_wrapper(state: CompanyState):
     """Wraps the subgraph to correctly format the output for the Main Graph's state."""
     result = company_graph.invoke(state)
     return {"company_results": [result]}
-
-from langgraph.constants import Send
 
 def fetch_node(state: ETFState):
     holdings = fetch_top_holdings(state["ticker"], count=3)
