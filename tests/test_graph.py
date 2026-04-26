@@ -17,3 +17,12 @@ def test_evaluate_node_skips_on_error():
     state = CompanyState(company="Test Co", news="", score=0, summary="", error="Previous Error")
     result = evaluate_node(state)
     assert result == {}
+
+from ethical_validator.graph import process_company_wrapper
+
+def test_process_company_wrapper(mocker):
+    # Mock the compiled graph's invoke method
+    mocker.patch('ethical_validator.graph.company_graph.invoke', return_value={"company": "Test Co", "score": 5})
+    # The wrapper should return a dict updating the company_results list
+    result = process_company_wrapper({"company": "Test Co"})
+    assert result == {"company_results": [{"company": "Test Co", "score": 5}]}
