@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>LangGraph Sub-Graph Architecture</title>
+<style>
+body { font-family: sans-serif; padding: 20px; background-color: #f4f4f9; }
+.graph-container { border: 2px solid #333; border-radius: 8px; padding: 20px; margin-bottom: 20px; background-color: #fff; }
+.node { border: 2px solid #555; border-radius: 6px; padding: 12px; margin: 10px; display: inline-block; background-color: #e9ecef; text-align: center; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+.edge { display: inline-block; padding: 0 10px; font-weight: bold; color: #777; font-size: 1.2em; }
+.subgraph-box { border: 2px dashed #0066cc; border-radius: 8px; padding: 15px; margin: 10px 0; background-color: #f0f8ff; position: relative; }
+.subgraph-label { position: absolute; top: -12px; left: 15px; background: #fff; padding: 0 5px; font-weight: bold; color: #0066cc; font-size: 0.9em; }
+.parallel-indicator { font-style: italic; color: #0066cc; display: block; margin-top: 5px; font-size: 0.85em; }
+.state-def { font-family: monospace; background: #333; color: #fff; padding: 10px; border-radius: 4px; overflow-x: auto; font-size: 0.9em; margin-top: 10px; }
+h3 { margin-top: 0; color: #2c3e50; }
+h4 { margin-bottom: 5px; color: #34495e; }
+</style>
+</head>
+<body>
+    <h2>Ethical ETF Validator - LangGraph Architecture</h2>
+
+    <div class="graph-container">
+        <h3>1. Main Graph (ETF Orchestrator)</h3>
+        <div>
+            <div class="node">Start<br><small>(Input: Ticker)</small></div>
+            <div class="edge">&rarr;</div>
+            <div class="node">fetch_node<br><small>(yfinance)</small></div>
+            <div class="edge">&rarr;</div>
+            
+            <div class="subgraph-box" style="display: inline-block; vertical-align: top;">
+                <span class="subgraph-label">process_holdings_node (MAP)</span>
+                <div style="text-align: center; margin-bottom: 10px;">
+                    <em>Spawns a Sub-Graph for each holding</em>
+                </div>
+                <!-- Visualizing Parallel Subgraphs -->
+                <div style="border: 1px solid #ccc; padding: 5px; margin: 2px; background: #fff; text-align: center; font-size: 0.8em;">Sub-Graph (ASML)</div>
+                <div style="border: 1px solid #ccc; padding: 5px; margin: 2px; background: #fff; text-align: center; font-size: 0.8em;">Sub-Graph (SAP)</div>
+                <div style="border: 1px solid #ccc; padding: 5px; margin: 2px; background: #fff; text-align: center; font-size: 0.8em;">Sub-Graph (Schneider)</div>
+                <span class="parallel-indicator">Executes in Parallel</span>
+            </div>
+
+            <div class="edge">&rarr;</div>
+            <div class="node">report_node<br><small>(Markdown formatting)</small></div>
+            <div class="edge">&rarr;</div>
+            <div class="node">End</div>
+        </div>
+        
+        <h4>State: ETFState</h4>
+        <div class="state-def">
+class ETFState(TypedDict):
+    ticker: str
+    holdings: list[str]
+    company_results: list[CompanyState]  <span style="color: #88ccff;"># Populated by Sub-Graphs</span>
+    final_report: str
+        </div>
+    </div>
+
+    <div class="graph-container" style="border-color: #0066cc;">
+        <h3 style="color: #0066cc;">2. Sub-Graph (Company Researcher & Evaluator)</h3>
+        <p style="margin-top: -10px; font-style: italic; color: #666;">Runs independently for a single company.</p>
+        <div>
+            <div class="node" style="border-color: #0066cc;">Start<br><small>(Input: Company Name)</small></div>
+            <div class="edge">&rarr;</div>
+            <div class="node" style="border-color: #0066cc;">research_node<br><small>(Tavily Search)</small></div>
+            <div class="edge">&rarr;</div>
+            <div class="node" style="border-color: #0066cc;">evaluate_node<br><small>(OpenRouter LLM)</small></div>
+            <div class="edge">&rarr;</div>
+            <div class="node" style="border-color: #0066cc;">End<br><small>(Returns: CompanyState)</small></div>
+        </div>
+        
+        <h4>State: CompanyState</h4>
+        <div class="state-def">
+class CompanyState(TypedDict):
+    company: str
+    news: str
+    score: int
+    summary: str
+    error: str
+        </div>
+    </div>
+</body>
+</html>
