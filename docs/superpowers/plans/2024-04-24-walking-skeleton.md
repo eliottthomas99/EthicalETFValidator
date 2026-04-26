@@ -157,7 +157,7 @@ git commit -m "feat: implement scandal researcher with Tavily"
 - Create: `src/ethical_validator/evaluator.py`
 - Test: `tests/test_evaluator.py`
 
-- [ ] **Step 1: Write failing test for `evaluate_esg_risk`**
+- [x] **Step 1: Write failing test for `evaluate_esg_risk`**
 ```python
 # tests/test_evaluator.py
 from ethical_validator.evaluator import evaluate_esg_risk
@@ -172,11 +172,11 @@ def test_evaluate_esg_risk_returns_score_and_summary(mock_chat):
     assert "Highly controversial" in summary
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 Run: `pytest tests/test_evaluator.py`
 Expected: `ImportError`
 
-- [ ] **Step 3: Implement `evaluate_esg_risk`**
+- [x] **Step 3: Implement `evaluate_esg_risk`**
 ```python
 # src/ethical_validator/evaluator.py
 import os
@@ -216,11 +216,11 @@ def evaluate_esg_risk(company: str, news: str) -> tuple[int, str]:
     return int(score_match.group(1)), summary_match.group(1).strip()
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 Run: `pytest tests/test_evaluator.py`
 Expected: `PASS`
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 ```bash
 git add src/ethical_validator/evaluator.py tests/test_evaluator.py
 git commit -m "feat: implement ESG evaluator with OpenRouter"
