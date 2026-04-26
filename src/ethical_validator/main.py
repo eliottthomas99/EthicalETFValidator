@@ -1,7 +1,7 @@
 # src/ethical_validator/main.py
 import os
 from dotenv import load_dotenv
-from ethical_validator.graph import app
+from ethical_validator.etf_graph import app
 
 def main():
     print("Loading environment variables...")

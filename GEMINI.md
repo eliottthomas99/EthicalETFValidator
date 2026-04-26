@@ -15,11 +15,16 @@ A pipeline that detects greenwashing by cross-referencing ETF holdings with real
 3. Rough LLM evaluation for greenwashing/ethics risk using `langchain-openai` (OpenRouter).
 4. Output basic markdown report to `reports/`.
 
-## Milestone 2: Graph Architecture (Next Session)
+## Milestone 2: Graph Architecture (Completed)
 1. Transition the linear script (`main.py`) into a LangGraph `StateGraph`.
 2. Define the State schema to pass data between nodes.
 3. Wire the nodes: `fetch_holdings` -> `research_companies` (parallel map/reduce) -> `analyze_ethics` -> `generate_report`.
-4. Improve data recency by investigating alternative holding fetchers (replacing or augmenting `yfinance`).
+4. Extracted Sub-Graph (`company_graph.py`) and Main Graph (`etf_graph.py`) for clarity.
+
+## Milestone 3: Refining Data Sources & Features (Next Session)
+1. Investigate alternative holding fetchers (replacing or augmenting `yfinance` for better recency).
+2. Consider caching mechanisms to reduce `tavily` API costs across runs.
+3. Enhance the LLM evaluation prompt and scoring mechanism.
 
 ## Known Limitations & Future Improvements
 - **Data Recency:** `yfinance` holdings data can lag behind official fund reporting (e.g., justETF). 
