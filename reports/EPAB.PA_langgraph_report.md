@@ -3,24 +3,42 @@
 ---
 ## ASML Holding NV
 **Risk Score:** 7/10
-**Summary:** The securities class action alleges that ASML executives misrepresented supplier challenges, demand outlook, and regulatory risks, suggesting possible unethical disclosure practices. Although not directly tied to environmental claims, the alleged deception points to significant governance concerns that heighten ESG risk.
+**Summary:** The lawsuit alleges that ASML executives issued materially false or misleading statements about supply‑chain severity, demand recovery, and regulatory risks, suggesting a lack of transparency and integrity that raises concerns about unethical conduct. No explicit claims of environmental exaggeration (greenwashing) are presented, so the overall risk remains moderate‑high rather than extreme.
 **Key News Snippet:**
-> Current Status of Case:  
-On March 27, 2026, the Court denied the majority of the Defendants’ Motion to Dismiss the Amended Complaint. This action is in discovery phase and is ongoing.
+> ## Tags
 
-If you wish to discuss this action or have any questions, please contact Kessler Topaz Meltzer & Check, LLP: Jon Naji, Esq. (484) 270-1453; toll-free at (844) 887-9500; or via e-mail at info@ktmc.com. If you would like additional information about the suit, please click on the link "Submit Your Information" above...
+ $ASML   ASML   ASML Holding   Class Action   Lawsuit   Shareholder   Stock   Money   Finance   Invest   Investor   BFA Law   Law Firm   Lawyer   Attorney   Fraud   Law
+
+### Related Links
+
+ 
+
+ GlobeNewswire
+
+## Recommended Reading
+
+ April 24, 2026 06:46 ET | Source: Bleichmar Fonti & Auld
+
+  DRVN Lawsuit: Driven Brands Securities Class Action Deadline Approaching – Investors with Losses after 39% Stock Drop Notified to Contact BFA Law
+
+  Driven Brands Securities Class Action Deadline Ap...
 
 ## SAP SE
 **Risk Score:** 2/10
-**Summary:** The excerpt provides no allegations or evidence that SAP SE has made false or misleading environmental claims; instead, it highlights SAP’s sustainability disclosures, governance updates, and recognition by rating agencies. Accordingly, the risk of greenwashing or unethical ESG practices appears low.
+**Summary:** The excerpt focuses on financial reporting, audit processes, compensation adjustments, and internal sustainability updates without any indication of misleading environmental claims or deceptive marketing. There is no evidence of greenwashing or unethical practices in the disclosed information, suggesting only low risk.
 **Key News Snippet:**
-> companies, Apple, Lululemon and Tyson foods, have become embroiled in greenwashing litigation. [...] Greenwashing lawsuits are legal actions brought against corporations for falsely advertising that their products, services and/or operations are more environmental friendly than they actually are. These lawsuits generally allege that these corporations have gained consumer trust and unfair financial advantage through such deceptive practices. The earliest major greenwashing suit was brought by Ca...
+> prepared the financial accounts of SAP SE and the SAP Group for 2025, comprising the SAP SE financial statements, the 
+
+consolidated financial statements, and the combined management report (including the group sus tainability statement), and 
+
+submitted them without delay to the Supervisory Board. 
+
+At its meeting on February 17 , 2026, the Finance and Investment Committee discussed with the Executive Board the Executive 
+
+Board’s proposal on the appropriation of retained earnings, and approved...
 
 ## Schneider Electric SE
-**Risk Score:** 7/10
-**Summary:** Schneider Electric has incurred multiple environmental and greenhouse‑gas violations, including recent fines in the UK and France, which cast doubt on the robustness of its sustainability claims. Combined with substantial anti‑competitive, labor, and safety penalties, this pattern suggests a notable risk of greenwashing or unethical ESG practices.
+**Risk Score:** 9/10
+**Summary:** Schneider Electric SE's recent $223.7 million anti-competitive practices fine in France (2024) reveals severe, ongoing governance failures that directly contradict its sustainability marketing claims, indicating high greenwashing risk. This pattern of antitrust violations across multiple years (2017, 2018, 2022, 2024) undermines credibility in its ESG commitments despite disclosed sustainable product lines under SFDR Articles 8/9.
 **Key News Snippet:**
-> | Schneider Electric UK Ltd | electrical and electronic equipment | labor standards violation | 2024 | United Kingdom | $45,329 |
-| INVENSYS SYSTEMS INC | electrical and electronic equipment | aviation safety violation | 2010 | United States | $36,000 |
-| Invensys PLC | electrical and electronic equipment | environmental violation | 2012 | United Kingdom | $33,083 |
-| Schneider Electric IT UK Limited | electrical and electronic equipment | greenhouse gas violation | 2025 | United Kingdom | $31,5...
+> disposition is not appropriate for publication and is not precedent except as provided by Ninth Circuit Rule 36-3.  The panel unanimously concludes this case is suitable for decision without oral argument. See Fed. R. App. P. 34(a)(2). Rule of Civil Procedure 12(b)(2). Williams v. Yamaha Motor Co., 851 F.3d 1015, 1020 (9th Cir. 2017). We affirm. The district court properly dismissed Arbit’s action for lack of personal jurisdiction after an evidentiary hearing because Arbit failed to establish th...
