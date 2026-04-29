@@ -3,42 +3,32 @@
 ---
 ## ASML Holding NV
 **Risk Score:** 7/10
-**Summary:** The lawsuit alleges that ASML executives issued materially false or misleading statements about supply‑chain severity, demand recovery, and regulatory risks, suggesting a lack of transparency and integrity that raises concerns about unethical conduct. No explicit claims of environmental exaggeration (greenwashing) are presented, so the overall risk remains moderate‑high rather than extreme.
+**Summary:** The allegation that a former ASML engineer stole trade secrets and violated sanctions legislation points to serious compliance and ethical lapses within the company, indicating a notable risk of unethical practices. While ASML promotes its role in enabling energy‑efficient chips, there is no direct evidence of greenwashing in the provided information, but the internal control weakness raises concerns about broader ESG credibility.
 **Key News Snippet:**
-> ## Tags
-
- $ASML   ASML   ASML Holding   Class Action   Lawsuit   Shareholder   Stock   Money   Finance   Invest   Investor   BFA Law   Law Firm   Lawyer   Attorney   Fraud   Law
-
-### Related Links
-
- 
-
- GlobeNewswire
-
-## Recommended Reading
-
- April 24, 2026 06:46 ET | Source: Bleichmar Fonti & Auld
-
-  DRVN Lawsuit: Driven Brands Securities Class Action Deadline Approaching – Investors with Losses after 39% Stock Drop Notified to Contact BFA Law
-
-  Driven Brands Securities Class Action Deadline Ap...
+> View ASML Holding NV Sponsored ADR ASML stock quote prices, financial information, real-time forecasts, and company news from CNN.
+---
+Q1 2026 financial results ASML Holding NV announced its 2026 first-quarter financial results on Wednesday, April 15, 2026 Video interview 01 / 31 €8.8bn Total net sales
+---
+A detailed overview of ASML Holding N.V. (ASML) stock, including real-time price, chart, key statistics, news, and more.
+---
+ASML is a leading innovator in the global semiconductor ecosystem. ...
 
 ## SAP SE
-**Risk Score:** 2/10
-**Summary:** The excerpt focuses on financial reporting, audit processes, compensation adjustments, and internal sustainability updates without any indication of misleading environmental claims or deceptive marketing. There is no evidence of greenwashing or unethical practices in the disclosed information, suggesting only low risk.
+**Risk Score:** 3/10
+**Summary:** The snippet discusses increasing greenwashing lawsuits and regulatory changes but does not cite any specific misleading environmental claims or unethical actions by SAP SE. Without direct evidence linking SAP to such practices, the risk of greenwashing remains relatively low.
 **Key News Snippet:**
-> prepared the financial accounts of SAP SE and the SAP Group for 2025, comprising the SAP SE financial statements, the 
-
-consolidated financial statements, and the combined management report (including the group sus tainability statement), and 
-
-submitted them without delay to the Supervisory Board. 
-
-At its meeting on February 17 , 2026, the Finance and Investment Committee discussed with the Executive Board the Executive 
-
-Board’s proposal on the appropriation of retained earnings, and approved...
+> Leading Environmental Misrepresentation Lawsuits. In 2025, new overseas regulations like the EU Green Claims Directive and increasing consumer awareness stateside have fueled recent litigation.
+---
+Awareness of greenwashing tricks can help you spot other talented greenwashers more easily, so let’s take a look at some recent examples.
+---
+The cancellation of the anti-greenwashing law this week came after EPP and far-right lawmakers separately wrote to the European Commission to withdraw the bill....
 
 ## Schneider Electric SE
-**Risk Score:** 9/10
-**Summary:** Schneider Electric SE's recent $223.7 million anti-competitive practices fine in France (2024) reveals severe, ongoing governance failures that directly contradict its sustainability marketing claims, indicating high greenwashing risk. This pattern of antitrust violations across multiple years (2017, 2018, 2022, 2024) undermines credibility in its ESG commitments despite disclosed sustainable product lines under SFDR Articles 8/9.
+**Risk Score:** 3/10
+**Summary:** Schneider Electric has been recognized as the world’s most sustainable company and pursues green bond issuance linked to environmental decoupling, with no specific accusations of deceptive claims in the provided news. Although green financing always warrants scrutiny, the available information indicates a low risk of greenwashing.
 **Key News Snippet:**
-> disposition is not appropriate for publication and is not precedent except as provided by Ninth Circuit Rule 36-3.  The panel unanimously concludes this case is suitable for decision without oral argument. See Fed. R. App. P. 34(a)(2). Rule of Civil Procedure 12(b)(2). Williams v. Yamaha Motor Co., 851 F.3d 1015, 1020 (9th Cir. 2017). We affirm. The district court properly dismissed Arbit’s action for lack of personal jurisdiction after an evidentiary hearing because Arbit failed to establish th...
+> Schneider Electric SE is a French multinational corporation that specializes in energy technology, covering electrification, automation, and digitalization for industry and homes.
+---
+Environmental Action Germany, or Deutsche Umwelthilfe (DUH), filed the suit last fall, accusing Adidas of deception.Meanwhile, the U.S. Federal Trade Commission has been working behind the scenes to make the first updates since 2012 to its Green Guides.
+---
+Schneider Electric Named the World’s Most Sustainable Comp...
