@@ -13,6 +13,9 @@ __pycache__/
 *$py.class
 *.so
 
+# AI tools
+opencode.json
+
 # IDEs
 .idea/
 .vscode/
