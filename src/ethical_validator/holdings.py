@@ -1,28 +1,55 @@
-import yfinance as yf
 from typing import List
 
-def fetch_top_holdings(ticker: str, count: int = 3) -> List[str]:
-    etf = yf.Ticker(ticker)
-    # yfinance holdings can be unreliable; we'll attempt to get them 
-    # and fail loudly if the data structure isn't what we expect.
-    try:
-        # In this version of yfinance, holdings are in funds_data.top_holdings
-        funds = etf.funds_data
-        if funds is None:
-            raise RuntimeError(f"No funds data available for {ticker}")
-        holdings_data = funds.top_holdings
-    except Exception as e:
-        raise RuntimeError(f"Error fetching holdings for {ticker}: {e}")
+import requests
+from bs4 import BeautifulSoup
 
-    if holdings_data is None or holdings_data.empty:
-        raise RuntimeError(f"Could not fetch holdings for {ticker}. yfinance returned no data.")
-    
-    # Extract company names from the top 'count' rows
-    # In this version, the column name is 'Name'
-    if 'Name' not in holdings_data.columns:
-        raise RuntimeError(f"Expected 'Name' column in holdings data, but found: {holdings_data.columns}")
-        
-    top_holdings = holdings_data.head(count)['Name'].tolist()
-    if not top_holdings:
-         raise RuntimeError(f"Holdings list is empty for {ticker}.")
-    return top_holdings
+
+def fetch_top_holdings(isin: str, count: int = 3) -> List[str]:
+    """Fetch the top holdings for an ETF by scraping justETF.
+
+    Args:
+        isin: The fund's ISIN (e.g. ``"LU2195226068"``).
+        count: Number of top holdings to return.
+
+    Returns:
+        A list of company names.
+    """
+    url = f"https://www.justetf.com/en/etf-profile.html?isin={isin}"
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/120.0.0.0 Safari/537.36"
+        ),
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+    }
+
+    try:
+        resp = requests.get(url, headers=headers, timeout=30)
+        resp.raise_for_status()
+    except requests.RequestException as e:
+        raise RuntimeError(f"Failed to fetch JustETF page for {isin}: {e}")
+
+    soup = BeautifulSoup(resp.text, "lxml")
+    holdings_heading = soup.find("h3", string="Top 10 Holdings")
+    if holdings_heading is None:
+        raise RuntimeError(
+            f"Could not find 'Top 10 Holdings' section on JustETF for {isin}. "
+            "The page structure may have changed or the ISIN may be invalid."
+        )
+
+    container = holdings_heading.find_parent()
+    if container is None:
+        raise RuntimeError(f"Could not locate holdings container on JustETF for {isin}.")
+
+    # justETF renders each holding as a link to /en/stock-profiles/{isin}
+    links = container.find_all("a", href=lambda x: x and "/stock-profiles/" in x)
+    if not links:
+        raise RuntimeError(f"No holdings links found on JustETF for {isin}.")
+
+    holdings = [link.get_text(strip=True) for link in links if link.get_text(strip=True)]
+    if not holdings:
+        raise RuntimeError(f"Holdings list is empty after parsing JustETF page for {isin}.")
+
+    return holdings[:count]

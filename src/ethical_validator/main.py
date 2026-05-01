@@ -7,10 +7,11 @@ def main():
     print("Loading environment variables...")
     load_dotenv()
     
-    ticker = "EPAB.PA"
-    print(f"--- Starting LangGraph ESG Risk Evaluation for {ticker} ---")
-    
-    initial_state = {"ticker": ticker}
+    # ISIN for Amundi S&P Eurozone Climate Paris Aligned UCITS ETF Acc (EPAB.PA)
+    isin = "LU2195226068"
+    print(f"--- Starting LangGraph ESG Risk Evaluation for {isin} ---")
+
+    initial_state = {"ticker": isin}
     
     try:
         # Invoke the compiled LangGraph
@@ -20,7 +21,7 @@ def main():
         
         # Save Report
         os.makedirs("reports", exist_ok=True)
-        report_filename = f"reports/{ticker}_langgraph_report.md"
+        report_filename = f"reports/{isin}_langgraph_report.md"
         with open(report_filename, "w") as f:
             f.write(report)
             
