@@ -3,18 +3,33 @@ from langgraph.graph import StateGraph, START, END
 
 from ethical_validator.researcher import search_company_news
 from ethical_validator.evaluator import evaluate_esg_risk
+from ethical_validator.knowledge_base import add_news_items, get_accumulated_context
 
 class CompanyState(TypedDict):
     company: str
     news: str
+    accumulated_knowledge: str
     score: int
     summary: str
     error: str
 
 def research_node(state: CompanyState):
     try:
-        news = search_company_news(state["company"])
-        return {"news": news}
+        news_results = search_company_news(state["company"])
+        if not news_results:
+            return {"news": "No significant news found.", "accumulated_knowledge": "No accumulated knowledge available."}
+
+        # Join for the immediate evaluator context
+        news_text = "\n---\n".join([r.get("body", "") for r in news_results])
+
+        # Update knowledge base with structured results
+        add_news_items(state["company"], news_results)
+        accumulated = get_accumulated_context(state["company"])
+
+        return {
+            "news": news_text,
+            "accumulated_knowledge": accumulated
+        }
     except Exception as e:
         return {"error": str(e)}
 
@@ -22,7 +37,10 @@ def evaluate_node(state: CompanyState):
     if state.get("error"):
         return {}
     try:
-        score, summary = evaluate_esg_risk(state["company"], state.get("news", ""))
+        company = state["company"]
+        fresh_news = state.get("news", "")
+        accumulated = state.get("accumulated_knowledge", "")
+        score, summary = evaluate_esg_risk(company, fresh_news, accumulated)
         return {"score": score, "summary": summary}
     except Exception as e:
         return {"error": str(e)}
