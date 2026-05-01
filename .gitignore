@@ -23,3 +23,7 @@ opencode.json
 
 # uv
 uv.lock
+
+# Generated artifacts
+knowledge_base/
+reports/
