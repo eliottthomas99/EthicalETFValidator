@@ -30,7 +30,7 @@ A pipeline that detects greenwashing by cross-referencing ETF holdings with real
 
 ## Milestone 3: Refining Data Sources & Features (In Progress)
 1. ~~Investigate alternative holding fetchers (replacing or augmenting `yfinance` for better recency).~~ ✅ **Done** — JustETF scraper implemented.
-2. Consider caching mechanisms to reduce `ddgs` / API costs across runs.
+2. ~~Consider caching mechanisms to reduce `ddgs` / API costs across runs.~~ ✅ **Done** — Replaced with **Company Knowledge Base** (`knowledge_base.py`). Accumulates research per company, auto-compacts when thresholds are met.
 3. Enhance the LLM evaluation prompt and scoring mechanism.
 
 ## Known Limitations & Future Improvements
