@@ -42,3 +42,73 @@ A pipeline that detects greenwashing by cross-referencing ETF holdings with real
 - Surgical updates to code.
 - Frequent git commits.
 - All secrets (API keys) in `.env`.
+
+## Git Workflow & PR Best Practices
+This project uses a branch-and-PR workflow even though it's a single-developer repo. This is intentional practice for professional collaboration:
+
+### Branch Strategy: Task-Level Branches
+One branch = one PR = one logical change. Commit freely on the branch (even messy "wip" messages), then clean up at merge time.
+
+### Branch Naming Convention
+| Prefix | Use for | Example |
+|--------|---------|---------|
+| `feature/` | New functionality | `feature/add-caching` |
+| `fix/` | Bug fixes | `fix/holdings-scraper-timeout` |
+| `docs/` | README, AGENTS.md, comments | `docs/update-pr-workflow` |
+| `refactor/` | Restructuring code without changing behavior | `refactor/extract-search-client` |
+
+Rules: lowercase, hyphens between words, descriptive but concise.
+
+### Full Workflow
+
+```bash
+# 1. Start fresh from main
+git checkout main && git pull origin main
+git checkout -b feature/description
+
+# 2. Work freely — commit as often as you want
+# (Messy messages like "wip", "fix", "ugh" are totally fine)
+git add .
+git commit -m "wip start caching"
+git commit -m "fix import error"
+git commit -m "tests pass"
+
+# 3. Before PR: sync your branch with latest main
+git checkout main && git pull origin main
+git checkout feature/description
+git merge main
+# Resolve any conflicts if they arise
+git push origin feature/description
+
+# 4. Open PR on GitHub
+# Base: main | Compare: feature/description
+# The diff shows only your changes
+
+# 5. Self-review the PR
+# Read every file as if a colleague wrote it
+# Check for debug prints, unclear names, missing docs
+
+# 6. Merge with "Squash and merge"
+# This combines all your messy commits into one clean commit on main
+
+# 7. Cleanup
+git checkout main && git pull origin main
+git branch -d feature/description
+git push origin --delete feature/description
+```
+
+### Why This Workflow?
+- **Commit freely:** Your hourly "save point" habit stays intact
+- **Push messy commits:** The full draft history is visible in the PR for reference
+- **Squash on GitHub:** `main` stays clean with 1 commit per feature
+- **Use `git merge main`:** Safer than rebase, no force-push needed, standard in most teams
+- **Delete branches after merge:** Keeps the repository clean
+
+### If main Changes While You're Working
+This is normal. The `git merge main` step (Step 3) brings the latest `main` into your branch before opening the PR. If there are conflicts, you resolve them before the reviewer sees anything.
+
+### Key Rules
+1. **Never commit directly to `main`** — always use a feature branch
+2. **Keep PRs small and focused** — one logical change per PR
+3. **Self-review before merging** — read the diff as if you were a reviewer
+4. **Delete branches after merging** — keeps the remote clean
