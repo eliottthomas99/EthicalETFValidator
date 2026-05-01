@@ -16,5 +16,7 @@ def test_search_company_news_calls_ddgs(mock_ddgs_class):
     result = search_company_news("Test Corp")
 
     mock_ddgs.text.assert_called_once()
-    assert "Scandal found" in result
-    assert "Another scandal" in result
+    assert isinstance(result, list)
+    assert len(result) == 2
+    assert result[0]["body"] == "Scandal found"
+    assert result[1]["body"] == "Another scandal"
