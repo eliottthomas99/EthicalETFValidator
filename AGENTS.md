@@ -37,6 +37,30 @@ A pipeline that detects greenwashing by cross-referencing ETF holdings with real
 - **Scraping fragility:** JustETF layout changes could break `holdings.py`. A fallback strategy or API-based source would improve resilience.
 - **Holdings caching:** ETF holdings are re-fetched from JustETF on every run. Holdings don't change minute-to-minute, so a short TTL cache (e.g., 1 hour) could reduce scraping load.
 - **ISIN-only input:** Currently requires the user to provide the ISIN. A ticker-to-ISIN lookup would be a nice UX improvement.
+- **Web deployment (IN PROGRESS):** Attempting to deploy the web GUI to Render. Build succeeds but runtime fails. See deployment notes below.
+
+## Deployment Notes (Render — Free Tier)
+
+**Status:** Build succeeds, runtime fails.
+
+**Context:** Render defaults to Poetry ("Using Poetry version 2.1.3 (default)" in logs), even though this project uses `uv` locally.
+
+**Issue:** Render creates a virtual environment at `.venv/`, but `uvicorn` (installed via `pip install -e .`) is not found when starting the app.
+
+**What was tried:**
+1. `uv sync` + `uv run uvicorn...` → `uv: command not found` (Render doesn't have `uv` pre-installed)
+2. `pip install -e .` + `uvicorn...` → `uvicorn: command not found`
+3. `pip install -e .` + `python -m uvicorn...` → `No module named uvicorn`
+4. `pip install -e .` + `.venv/bin/python -m uvicorn...` → `No module named uvicorn`
+
+**Working locally:** `uv run uvicorn web.app:app --host 127.0.0.1 --port 8000` works perfectly.
+
+**Next steps to investigate:**
+- Check if `pip install -e .` is installing to the correct Python environment (Render uses Poetry by default)
+- Try explicitly activating the venv in the build command
+- Consider using a `requirements.txt` instead of `pyproject.toml` for Render
+- Explore alternative free hosts (Railway, Fly.io, PythonAnywhere)
+- Check Render's Python documentation for virtualenv handling
 
 ## Project Standards
 - Surgical updates to code.
