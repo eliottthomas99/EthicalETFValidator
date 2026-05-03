@@ -12,13 +12,15 @@ app = FastAPI()
 class AnalyzeRequest(BaseModel):
     isin: str
     api_key: str
+    model: str = "nvidia/nemotron-3-super-120b-a12b:free"
 
 @app.post("/api/analyze")
 def analyze(request: AnalyzeRequest):
     try:
         initial_state = {
             "ticker": request.isin,
-            "api_key": request.api_key
+            "api_key": request.api_key,
+            "model": request.model
         }
         final_state = etf_app.invoke(initial_state)
 

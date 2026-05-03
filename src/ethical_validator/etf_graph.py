@@ -14,6 +14,7 @@ class ETFState(TypedDict):
     company_results: Annotated[List[CompanyState], operator.add]
     final_report: str
     api_key: str
+    model: str
 
 def process_company_wrapper(state: CompanyState):
     """Wraps the subgraph to correctly format the output for the Main Graph's state."""
@@ -27,7 +28,8 @@ def fetch_node(state: ETFState):
 def process_holdings(state: ETFState):
     # LangGraph map-reduce pattern using Send
     api_key = state.get("api_key", "")
-    return [Send("process_company", {"company": holding, "api_key": api_key}) for holding in state.get("holdings", [])]
+    model = state.get("model", "nvidia/nemotron-3-super-120b-a12b:free")
+    return [Send("process_company", {"company": holding, "api_key": api_key, "model": model}) for holding in state.get("holdings", [])]
 
 def report_node(state: ETFState):
     ticker = state["ticker"]

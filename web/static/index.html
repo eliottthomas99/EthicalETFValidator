@@ -10,7 +10,7 @@
         body { font-family: 'Inter', sans-serif; }
         
         .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #059669 0%, #10b981 50%, #34d399 100%);
         }
         
         .card-hover {
@@ -40,7 +40,7 @@
             width: 48px;
             height: 48px;
             border: 4px solid #e5e7eb;
-            border-top-color: #667eea;
+            border-top-color: #059669;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -58,7 +58,7 @@
         
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
+            background: linear-gradient(90deg, #059669, #10b981);
             border-radius: 2px;
             transition: width 0.5s ease;
         }
@@ -73,7 +73,7 @@
         }
         
         .input-focus:focus {
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
         }
     </style>
 </head>
@@ -82,7 +82,7 @@
     <div class="gradient-bg text-white py-12 px-4">
         <div class="max-w-3xl mx-auto text-center">
             <h1 class="text-4xl md:text-5xl font-bold mb-3">Ethical ETF Validator</h1>
-            <p class="text-lg text-blue-100 max-w-xl mx-auto">
+            <p class="text-lg text-emerald-100 max-w-xl mx-auto">
                 Analyze ETF holdings for ESG risks, greenwashing, and ethical concerns using AI-powered research.
             </p>
         </div>
@@ -100,7 +100,7 @@
                         type="text" 
                         id="isin" 
                         placeholder="e.g., LU2195226068" 
-                        class="w-full p-4 border border-gray-200 rounded-xl text-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent input-focus transition-all"
+                        class="w-full p-4 border border-gray-200 rounded-xl text-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent input-focus transition-all"
                         required
                     >
                     <p class="text-xs text-gray-500 mt-2">
@@ -116,12 +116,31 @@
                         type="password" 
                         id="apiKey" 
                         placeholder="sk-or-v1-..." 
-                        class="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent input-focus transition-all"
+                        class="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent input-focus transition-all"
                         required
                     >
                     <p class="text-xs text-gray-500 mt-2">
                         Your key is used only for this analysis and never stored. 
-                        <a href="https://openrouter.ai/keys" target="_blank" class="text-indigo-600 hover:underline">Get a free key →</a>
+                        <a href="https://openrouter.ai/keys" target="_blank" class="text-emerald-600 hover:underline">Get a free key →</a>
+                    </p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        AI Model
+                    </label>
+                    <select 
+                        id="model" 
+                        class="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent input-focus transition-all bg-white"
+                    >
+                        <option value="nvidia/nemotron-3-super-120b-a12b:free">Nemotron 3 Super (Free)</option>
+                        <option value="google/gemini-2.0-flash-001">Gemini 2.0 Flash</option>
+                        <option value="anthropic/claude-3.5-haiku">Claude 3.5 Haiku</option>
+                        <option value="meta-llama/llama-3.3-70b-instruct">Llama 3.3 70B</option>
+                        <option value="openai/gpt-4o-mini">GPT-4o Mini</option>
+                    </select>
+                    <p class="text-xs text-gray-500 mt-2">
+                        Choose the AI model for ESG analysis. Free models may have rate limits.
                     </p>
                 </div>
                 
@@ -145,7 +164,7 @@
             </div>
             
             <p class="text-sm text-gray-500">
-                Researching companies and evaluating ESG risks...<br>
+                Researching top 3 holdings and evaluating ESG risks...<br>
                 This usually takes 30-60 seconds
             </p>
         </div>
@@ -174,6 +193,7 @@
                     <div>
                         <h2 class="text-2xl font-bold text-gray-800">Analysis Results</h2>
                         <p class="text-gray-600 mt-1">ISIN: <span id="resultIsin" class="font-mono bg-gray-100 px-2 py-1 rounded text-sm"></span></p>
+                        <p class="text-sm text-gray-500 mt-1">Analyzed top 3 holdings by weight</p>
                     </div>
                     <div id="overallScore" class="text-center">
                         <!-- Overall score badge inserted here -->
@@ -188,7 +208,7 @@
             <!-- Full Report -->
             <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8">
                 <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
-                    <svg class="w-5 h-5 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-5 h-5 mr-2 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                     </svg>
                     Detailed Report
@@ -292,6 +312,7 @@
             
             const isin = document.getElementById('isin').value.trim();
             const apiKey = document.getElementById('apiKey').value.trim();
+            const model = document.getElementById('model').value;
             
             // Show loading
             formSection.classList.add('hidden');
@@ -305,7 +326,7 @@
                 const response = await fetch('/api/analyze', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({isin, api_key: apiKey})
+                    body: JSON.stringify({isin, api_key: apiKey, model})
                 });
                 
                 const data = await response.json();
