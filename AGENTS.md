@@ -50,7 +50,8 @@ The pipeline works locally. The current priority is building a web interface so 
 ✅ **Render deployment working.** Key fix: ensure `fastapi` and `uvicorn` are in `pyproject.toml` dependencies, and use `.venv/bin/pip install -e .` as the build command so packages install into the same environment as the start command.
 
 ### What's Left
-- [ ] Wire the `/api/analyze` endpoint to the actual ETF pipeline
+- [x] Wire the `/api/analyze` endpoint to the actual ETF pipeline
+- [x] Refactor pipeline to accept `api_key` as parameter (no env var dependency)
 - [ ] Add loading states and progress feedback
 - [ ] Polish the UI (colors, typography, responsive design)
 - [ ] Handle errors gracefully (invalid ISIN, API failures, etc.)
