@@ -35,7 +35,7 @@ A pipeline that detects greenwashing by cross-referencing ETF holdings with real
 
 ## Known Limitations & Future Improvements
 - **Scraping fragility:** JustETF layout changes could break `holdings.py`. A fallback strategy or API-based source would improve resilience.
-- **Caching:** No caching layer yet — every run re-fetches holdings and re-searches news.
+- **Holdings caching:** ETF holdings are re-fetched from JustETF on every run. Holdings don't change minute-to-minute, so a short TTL cache (e.g., 1 hour) could reduce scraping load.
 - **ISIN-only input:** Currently requires the user to provide the ISIN. A ticker-to-ISIN lookup would be a nice UX improvement.
 
 ## Project Standards
