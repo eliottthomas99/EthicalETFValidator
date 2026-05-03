@@ -1,6 +1,6 @@
 # Ethical ETF Validator
 
-> AI-powered ESG risk analysis for ETF holdings. Detect greenwashing before you invest.
+AI-powered ESG risk analysis for ETF holdings. Detect greenwashing before you invest.
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Render-success)](https://ethicaletfvalidator.onrender.com/)
 [![Python](https://img.shields.io/badge/Python-3.12-blue)](https://www.python.org/)
@@ -9,7 +9,7 @@
 
 ## What is this?
 
-**Ethical ETF Validator** analyzes the top holdings of any ETF and evaluates their ESG (Environmental, Social, Governance) risk using AI-powered research.
+Ethical ETF Validator analyzes the top holdings of any ETF and evaluates their ESG (Environmental, Social, Governance) risk using AI-powered research.
 
 Enter an ETF's ISIN code, and the tool will:
 1. Fetch the top 3 holdings from [JustETF](https://www.justetf.com)
@@ -19,21 +19,21 @@ Enter an ETF's ISIN code, and the tool will:
 
 ## Live Demo
 
-Try it now: **[https://ethicaletfvalidator.onrender.com/](https://ethicaletfvalidator.onrender.com/)**
+Try it now: [https://ethicaletfvalidator.onrender.com/](https://ethicaletfvalidator.onrender.com/)
 
-No installation required — just enter an ISIN and your [OpenRouter](https://openrouter.ai) API key.
+No installation required. Just enter an ISIN and your [OpenRouter](https://openrouter.ai) API key.
 
 ## How it works
 
 ```
 User enters ISIN
-    ↓
+    |
 Scrape top 3 holdings from JustETF
-    ↓
+    |
 Search DuckDuckGo for news on each company
-    ↓
+    |
 AI evaluates ESG risk (1-10 scale)
-    ↓
+    |
 Generate report with scores and summaries
 ```
 
@@ -47,12 +47,12 @@ Generate report with scores and summaries
 
 ## Features
 
-- **Real-time ESG Analysis** — Analyzes ETF holdings using up-to-date news
-- **AI-Powered Scoring** — Risk scores from 1 (Low) to 10 (Extreme)
-- **Company Knowledge Base** — Accumulates research across multiple runs with automatic summarization
-- **Model Selection** — Choose any OpenRouter AI model (including free tiers)
-- **Privacy-First** — Your API key is never stored; each request is stateless
-- **Mobile Responsive** — Works on desktop, tablet, and phone
+- **Real-time ESG Analysis** - Analyzes ETF holdings using up-to-date news
+- **AI-Powered Scoring** - Risk scores from 1 (Low) to 10 (Extreme)
+- **Company Knowledge Base** - Accumulates research across multiple runs with automatic summarization
+- **Model Selection** - Choose any OpenRouter AI model (including free tiers)
+- **Privacy-First** - Your API key is never stored; each request is stateless
+- **Mobile Responsive** - Works on desktop, tablet, and phone
 
 ## Example
 
@@ -60,9 +60,9 @@ Input: `LU2195226068` (Amundi S&P Eurozone Climate Paris Aligned)
 
 Output:
 ```
-ASML Holding NV        — Score: 3/10 (Low Risk)
-SAP SE                 — Score: 4/10 (Low Risk)  
-Schneider Electric SE  — Score: 5/10 (Medium Risk)
+ASML Holding NV        - Score: 3/10 (Low Risk)
+SAP SE                 - Score: 4/10 (Low Risk)  
+Schneider Electric SE  - Score: 5/10 (Medium Risk)
 ```
 
 ## Tech Stack
@@ -113,27 +113,9 @@ Then visit: `http://127.0.0.1:8000`
 - [ ] Historical trend tracking
 - [ ] Ticker-to-ISIN lookup
 
-## Contributing
-
-This project uses a branch-and-PR workflow for practice:
-
-```bash
-# Create a feature branch
-git checkout -b feature/your-feature
-
-# Make changes and commit
-git add .
-git commit -m "feat: description"
-
-# Push and open PR
-git push origin feature/your-feature
-```
-
-See `AGENTS.md` for full workflow details.
-
 ## License
 
-MIT License — feel free to use, modify, and share.
+MIT License - feel free to use, modify, and share.
 
 ## Acknowledgments
 
