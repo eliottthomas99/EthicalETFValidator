@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethical ETF Validator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <div class="max-w-2xl mx-auto p-8">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">Ethical ETF Validator</h1>
+        <p class="text-gray-600 mb-8">Enter an ISIN to analyze ESG risks</p>
+        
+        <form id="analyzeForm" class="space-y-4">
+            <input 
+                type="text" 
+                id="isin" 
+                placeholder="LU2195226068" 
+                class="w-full p-3 border rounded-lg"
+                required
+            >
+            <input 
+                type="password" 
+                id="apiKey" 
+                placeholder="OpenRouter API Key" 
+                class="w-full p-3 border rounded-lg"
+                required
+            >
+            <button 
+                type="submit" 
+                class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700"
+            >
+                Analyze
+            </button>
+        </form>
+        
+        <div id="result" class="mt-8 hidden">
+            <h2 class="text-xl font-semibold mb-2">Result</h2>
+            <pre id="resultContent" class="bg-gray-100 p-4 rounded-lg overflow-x-auto"></pre>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('analyzeForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const isin = document.getElementById('isin').value;
+            const apiKey = document.getElementById('apiKey').value;
+            
+            document.getElementById('result').classList.remove('hidden');
+            document.getElementById('resultContent').textContent = 'Loading...';
+            
+            try {
+                const response = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({isin, api_key: apiKey})
+                });
+                const data = await response.json();
+                document.getElementById('resultContent').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('resultContent').textContent = 'Error: ' + error.message;
+            }
+        });
+    </script>
+</body>
+</html>
