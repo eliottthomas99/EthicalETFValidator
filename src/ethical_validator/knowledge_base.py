@@ -33,7 +33,7 @@ def _save_kb(company: str, data: dict[str, Any]) -> None:
     os.makedirs("knowledge_base", exist_ok=True)
     path = _kb_path(company)
     with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
+        json.dump(data, f, indent=2, ensure_ascii=True)
 
 
 def _count_raw_items(items: list[dict]) -> int:
