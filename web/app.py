@@ -22,10 +22,17 @@ def analyze(request: AnalyzeRequest):
         }
         final_state = etf_app.invoke(initial_state)
 
+        # Strip api_key from company_results before returning
+        company_results = final_state.get("company_results", [])
+        safe_results = []
+        for result in company_results:
+            safe_result = {k: v for k, v in result.items() if k != "api_key"}
+            safe_results.append(safe_result)
+
         return {
             "isin": request.isin,
             "holdings": final_state.get("holdings", []),
-            "company_results": final_state.get("company_results", []),
+            "company_results": safe_results,
             "report": final_state.get("final_report", "")
         }
     except Exception as e:
