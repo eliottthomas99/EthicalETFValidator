@@ -5,49 +5,301 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ethical ETF Validator</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .score-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .score-low { background: #dcfce7; color: #166534; border: 2px solid #bbf7d0; }
+        .score-medium { background: #fef9c3; color: #854d0e; border: 2px solid #fde047; }
+        .score-high { background: #fee2e2; color: #991b1b; border: 2px solid #fecaca; }
+        
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 4px solid #e5e7eb;
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background: #e5e7eb;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .input-focus:focus {
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+    </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
-    <div class="max-w-2xl mx-auto p-8">
-        <h1 class="text-3xl font-bold text-gray-800 mb-2">Ethical ETF Validator</h1>
-        <p class="text-gray-600 mb-8">Enter an ISIN to analyze ESG risks</p>
-        
-        <form id="analyzeForm" class="space-y-4">
-            <input 
-                type="text" 
-                id="isin" 
-                placeholder="LU2195226068" 
-                class="w-full p-3 border rounded-lg"
-                required
-            >
-            <input 
-                type="password" 
-                id="apiKey" 
-                placeholder="OpenRouter API Key" 
-                class="w-full p-3 border rounded-lg"
-                required
-            >
-            <button 
-                type="submit" 
-                class="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700"
-            >
-                Analyze
-            </button>
-        </form>
-        
-        <div id="result" class="mt-8 hidden">
-            <h2 class="text-xl font-semibold mb-2">Result</h2>
-            <pre id="resultContent" class="bg-gray-100 p-4 rounded-lg overflow-x-auto"></pre>
+    <!-- Hero Header -->
+    <div class="gradient-bg text-white py-12 px-4">
+        <div class="max-w-3xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-3">Ethical ETF Validator</h1>
+            <p class="text-lg text-blue-100 max-w-xl mx-auto">
+                Analyze ETF holdings for ESG risks, greenwashing, and ethical concerns using AI-powered research.
+            </p>
         </div>
     </div>
 
-    <script>
-        document.getElementById('analyzeForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const isin = document.getElementById('isin').value;
-            const apiKey = document.getElementById('apiKey').value;
+    <div class="max-w-3xl mx-auto px-4 -mt-8 relative z-10">
+        <!-- Form Card -->
+        <div id="formSection" class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-8 fade-in">
+            <form id="analyzeForm" class="space-y-5">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        ETF ISIN Code
+                    </label>
+                    <input 
+                        type="text" 
+                        id="isin" 
+                        placeholder="e.g., LU2195226068" 
+                        class="w-full p-4 border border-gray-200 rounded-xl text-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent input-focus transition-all"
+                        required
+                    >
+                    <p class="text-xs text-gray-500 mt-2">
+                        Example: <span class="font-mono bg-gray-100 px-2 py-1 rounded">LU2195226068</span> (Amundi Climate Paris Aligned)
+                    </p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">
+                        OpenRouter API Key
+                    </label>
+                    <input 
+                        type="password" 
+                        id="apiKey" 
+                        placeholder="sk-or-v1-..." 
+                        class="w-full p-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent input-focus transition-all"
+                        required
+                    >
+                    <p class="text-xs text-gray-500 mt-2">
+                        Your key is used only for this analysis and never stored. 
+                        <a href="https://openrouter.ai/keys" target="_blank" class="text-indigo-600 hover:underline">Get a free key →</a>
+                    </p>
+                </div>
+                
+                <button 
+                    type="submit" 
+                    class="w-full gradient-bg text-white p-4 rounded-xl font-semibold text-lg hover:opacity-90 transition-opacity shadow-lg"
+                >
+                    Analyze ETF
+                </button>
+            </form>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loadingSection" class="hidden bg-white rounded-2xl shadow-xl p-8 text-center mb-8">
+            <div class="loader mx-auto mb-6"></div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Analyzing ETF</h3>
+            <p id="loadingStatus" class="text-gray-600 mb-4">Initializing...</p>
             
-            document.getElementById('result').classList.remove('hidden');
-            document.getElementById('resultContent').textContent = 'Loading...';
+            <div class="progress-bar max-w-xs mx-auto mb-4">
+                <div id="progressFill" class="progress-fill" style="width: 0%"></div>
+            </div>
+            
+            <p class="text-sm text-gray-500">
+                Researching companies and evaluating ESG risks...<br>
+                This usually takes 30-60 seconds
+            </p>
+        </div>
+
+        <!-- Error State -->
+        <div id="errorSection" class="hidden bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6 mb-8 fade-in">
+            <div class="flex items-start">
+                <svg class="w-6 h-6 text-red-500 mt-0.5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <div class="flex-1">
+                    <h3 class="text-lg font-semibold text-red-800 mb-1">Analysis Failed</h3>
+                    <p id="errorMessage" class="text-red-700"></p>
+                    <button onclick="resetForm()" class="mt-4 bg-red-600 text-white px-5 py-2 rounded-lg hover:bg-red-700 transition-colors font-medium">
+                        Try Again
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div id="resultsSection" class="hidden space-y-6 fade-in">
+            <!-- Summary Header -->
+            <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">Analysis Results</h2>
+                        <p class="text-gray-600 mt-1">ISIN: <span id="resultIsin" class="font-mono bg-gray-100 px-2 py-1 rounded text-sm"></span></p>
+                    </div>
+                    <div id="overallScore" class="text-center">
+                        <!-- Overall score badge inserted here -->
+                    </div>
+                </div>
+                
+                <div id="holdingsList" class="space-y-4">
+                    <!-- Company cards inserted here -->
+                </div>
+            </div>
+
+            <!-- Full Report -->
+            <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    Detailed Report
+                </h3>
+                <div id="reportContent" class="prose max-w-none text-gray-700 whitespace-pre-wrap bg-gray-50 p-4 rounded-xl text-sm leading-relaxed"></div>
+            </div>
+
+            <button onclick="resetForm()" class="w-full bg-gray-800 text-white p-4 rounded-xl hover:bg-gray-900 font-semibold transition-colors shadow-lg mb-8">
+                Analyze Another ETF
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-8 text-gray-500 text-sm">
+        <p>Ethical ETF Validator — Open source ESG analysis tool</p>
+    </footer>
+
+    <script>
+        const form = document.getElementById('analyzeForm');
+        const formSection = document.getElementById('formSection');
+        const loadingSection = document.getElementById('loadingSection');
+        const loadingStatus = document.getElementById('loadingStatus');
+        const progressFill = document.getElementById('progressFill');
+        const errorSection = document.getElementById('errorSection');
+        const errorMessage = document.getElementById('errorMessage');
+        const resultsSection = document.getElementById('resultsSection');
+        const resultIsin = document.getElementById('resultIsin');
+        const holdingsList = document.getElementById('holdingsList');
+        const reportContent = document.getElementById('reportContent');
+        const overallScore = document.getElementById('overallScore');
+
+        const loadingSteps = [
+            { message: 'Fetching ETF holdings...', progress: 15 },
+            { message: 'Researching companies...', progress: 40 },
+            { message: 'Analyzing ESG risks...', progress: 70 },
+            { message: 'Generating report...', progress: 90 }
+        ];
+
+        let currentStep = 0;
+        let stepInterval;
+
+        function startLoadingAnimation() {
+            currentStep = 0;
+            updateLoadingStep();
+            stepInterval = setInterval(() => {
+                currentStep = Math.min(currentStep + 1, loadingSteps.length - 1);
+                updateLoadingStep();
+            }, 8000); // Change step every 8 seconds
+        }
+
+        function updateLoadingStep() {
+            const step = loadingSteps[currentStep];
+            loadingStatus.textContent = step.message;
+            progressFill.style.width = step.progress + '%';
+        }
+
+        function stopLoadingAnimation() {
+            clearInterval(stepInterval);
+        }
+
+        function getErrorMessage(error) {
+            const errorStr = error.toLowerCase();
+            
+            if (errorStr.includes('isin') || errorStr.includes('holdings') || errorStr.includes('justetf')) {
+                return 'Could not find ETF holdings. Please verify the ISIN code is correct.';
+            }
+            if (errorStr.includes('api_key') || errorStr.includes('openrouter')) {
+                return 'API key error. Please check your OpenRouter API key is valid and has credits.';
+            }
+            if (errorStr.includes('rate limit') || errorStr.includes('too many requests')) {
+                return 'Rate limit reached. Please wait a moment and try again.';
+            }
+            if (errorStr.includes('timeout') || errorStr.includes('connection')) {
+                return 'Connection timeout. The server may be busy, please try again.';
+            }
+            
+            return 'An unexpected error occurred. Please try again or check your inputs.';
+        }
+
+        function getScoreClass(score) {
+            if (score <= 3) return 'score-low';
+            if (score <= 6) return 'score-medium';
+            return 'score-high';
+        }
+
+        function getScoreLabel(score) {
+            if (score <= 3) return 'Low Risk';
+            if (score <= 6) return 'Medium Risk';
+            return 'High Risk';
+        }
+
+        function calculateAverageScore(results) {
+            const validScores = results.filter(r => r.score && !isNaN(r.score)).map(r => r.score);
+            if (validScores.length === 0) return 0;
+            return Math.round(validScores.reduce((a, b) => a + b, 0) / validScores.length);
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const isin = document.getElementById('isin').value.trim();
+            const apiKey = document.getElementById('apiKey').value.trim();
+            
+            // Show loading
+            formSection.classList.add('hidden');
+            loadingSection.classList.remove('hidden');
+            resultsSection.classList.add('hidden');
+            errorSection.classList.add('hidden');
+            
+            startLoadingAnimation();
             
             try {
                 const response = await fetch('/api/analyze', {
@@ -55,12 +307,92 @@
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({isin, api_key: apiKey})
                 });
+                
                 const data = await response.json();
-                document.getElementById('resultContent').textContent = JSON.stringify(data, null, 2);
+                
+                stopLoadingAnimation();
+                
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                // Show results
+                loadingSection.classList.add('hidden');
+                resultsSection.classList.remove('hidden');
+                
+                resultIsin.textContent = data.isin;
+                
+                // Calculate and show overall score
+                const avgScore = calculateAverageScore(data.company_results || []);
+                if (avgScore > 0) {
+                    overallScore.innerHTML = `
+                        <div class="${getScoreClass(avgScore)} score-badge mb-1">${avgScore}</div>
+                        <div class="text-xs font-medium text-gray-600">${getScoreLabel(avgScore)}</div>
+                    `;
+                }
+                
+                // Build company cards
+                holdingsList.innerHTML = '';
+                if (data.company_results) {
+                    data.company_results.forEach((result, index) => {
+                        const score = result.score || 0;
+                        const scoreClass = getScoreClass(score);
+                        const scoreLabel = getScoreLabel(score);
+                        
+                        const card = document.createElement('div');
+                        card.className = 'card-hover bg-white border border-gray-100 rounded-xl p-5';
+                        card.style.animationDelay = `${index * 0.1}s`;
+                        
+                        if (result.error) {
+                            card.innerHTML = `
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1">
+                                        <h4 class="text-lg font-semibold text-gray-800 mb-2">${result.company || 'Unknown Company'}</h4>
+                                        <div class="bg-red-50 border-l-4 border-red-400 p-3 rounded-r-lg">
+                                            <p class="text-red-700 text-sm">${result.error}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        } else {
+                            card.innerHTML = `
+                                <div class="flex items-start justify-between">
+                                    <div class="flex-1 mr-4">
+                                        <h4 class="text-lg font-semibold text-gray-800 mb-2">${result.company || 'Unknown Company'}</h4>
+                                        <p class="text-gray-700 leading-relaxed">${result.summary || 'No summary available.'}</p>
+                                    </div>
+                                    <div class="text-center flex-shrink-0">
+                                        <div class="${scoreClass} score-badge mb-1">${score}</div>
+                                        <div class="text-xs font-medium text-gray-600">${scoreLabel}</div>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                        
+                        holdingsList.appendChild(card);
+                    });
+                }
+                
+                // Show report
+                reportContent.textContent = data.report || 'No report available.';
+                
             } catch (error) {
-                document.getElementById('resultContent').textContent = 'Error: ' + error.message;
+                stopLoadingAnimation();
+                loadingSection.classList.add('hidden');
+                errorSection.classList.remove('hidden');
+                errorMessage.textContent = getErrorMessage(error.message);
             }
         });
+
+        function resetForm() {
+            form.reset();
+            formSection.classList.remove('hidden');
+            loadingSection.classList.add('hidden');
+            resultsSection.classList.add('hidden');
+            errorSection.classList.add('hidden');
+            overallScore.innerHTML = '';
+            progressFill.style.width = '0%';
+        }
     </script>
 </body>
 </html>
