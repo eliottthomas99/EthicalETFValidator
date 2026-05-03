@@ -52,10 +52,10 @@ The pipeline works locally. The current priority is building a web interface so 
 ### What's Left
 - [x] Wire the `/api/analyze` endpoint to the actual ETF pipeline
 - [x] Refactor pipeline to accept `api_key` as parameter (no env var dependency)
-- [ ] Add loading states and progress feedback
-- [ ] Polish the UI (colors, typography, responsive design)
-- [ ] Handle errors gracefully (invalid ISIN, API failures, etc.)
-- [ ] Add report display (markdown rendering)
+- [x] Add loading states and progress feedback
+- [x] Polish the UI (colors, typography, responsive design)
+- [x] Handle errors gracefully (invalid ISIN, API failures, etc.)
+- [x] Add report display (markdown rendering)
 
 ## Project Standards
 - Surgical updates to code.
