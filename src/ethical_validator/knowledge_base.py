@@ -41,11 +41,10 @@ def _count_raw_items(items: list[dict]) -> int:
     return sum(1 for item in items if item.get("type") == "raw")
 
 
-def _summarize_items(company: str, items: list[dict]) -> dict[str, Any]:
+def _summarize_items(company: str, items: list[dict], api_key: str = "") -> dict[str, Any]:
     """Use the LLM to summarize a list of raw items into one summary item."""
-    api_key = os.getenv("OPENROUTER_API_KEY")
     if not api_key:
-        raise RuntimeError("OPENROUTER_API_KEY not found in environment.")
+        raise RuntimeError("api_key is required.")
 
     llm = ChatOpenAI(
         model="nvidia/nemotron-3-super-120b-a12b:free",
@@ -81,13 +80,13 @@ Focus on the most important and recurring themes.
     }
 
 
-def _compact_raw_items(data: dict[str, Any]) -> dict[str, Any]:
+def _compact_raw_items(data: dict[str, Any], api_key: str | None = None) -> dict[str, Any]:
     """If there are 5+ raw items, compact them into a single summary."""
     items = data.get("items", [])
     raw_items = [item for item in items if item.get("type") == "raw"]
 
     if len(raw_items) >= 5:
-        summary = _summarize_items(data["company"], raw_items)
+        summary = _summarize_items(data["company"], raw_items, api_key=api_key)
         # Remove raw items and add summary
         data["items"] = [item for item in items if item.get("type") != "raw"]
         data["items"].append(summary)
@@ -95,15 +94,14 @@ def _compact_raw_items(data: dict[str, Any]) -> dict[str, Any]:
     return data
 
 
-def _compact_all_items(data: dict[str, Any]) -> dict[str, Any]:
+def _compact_all_items(data: dict[str, Any], api_key: str = "") -> dict[str, Any]:
     """If total items >= 10, compact everything into a single master summary."""
     items = data.get("items", [])
 
     if len(items) >= 10:
         # Combine all item texts and ask LLM for a single summary
-        api_key = os.getenv("OPENROUTER_API_KEY")
         if not api_key:
-            raise RuntimeError("OPENROUTER_API_KEY not found in environment.")
+            raise RuntimeError("api_key is required.")
 
         llm = ChatOpenAI(
             model="nvidia/nemotron-3-super-120b-a12b:free",
@@ -145,7 +143,7 @@ Please provide a comprehensive 2-3 sentence summary of all the ethical, environm
     return data
 
 
-def add_news_items(company: str, news_results: list[dict[str, str]]) -> dict[str, Any]:
+def add_news_items(company: str, news_results: list[dict[str, str]], api_key: str = "") -> dict[str, Any]:
     """
     Add new DuckDuckGo news results to a company's knowledge base.
     Triggers compaction if thresholds are met.
@@ -163,10 +161,10 @@ def add_news_items(company: str, news_results: list[dict[str, str]]) -> dict[str
         data["items"].append(item)
 
     # First: compact raw items if >= 5
-    data = _compact_raw_items(data)
+    data = _compact_raw_items(data, api_key=api_key)
 
     # Second: compact everything if total >= 10
-    data = _compact_all_items(data)
+    data = _compact_all_items(data, api_key=api_key)
 
     _save_kb(company, data)
     return data

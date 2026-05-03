@@ -12,8 +12,8 @@ def test_fetch_node(mocker):
     assert fetch_node(state) == {"holdings": ["Co A"]}
 
 def test_process_holdings():
-    state = ETFState(ticker="EPAB.PA", holdings=["Co A", "Co B"], company_results=[], final_report="")
+    state = ETFState(ticker="EPAB.PA", holdings=["Co A", "Co B"], company_results=[], final_report="", api_key="")
     sends = process_holdings(state)
     assert len(sends) == 2
     assert sends[0].node == "process_company"
-    assert sends[0].arg == {"company": "Co A"}
+    assert sends[0].arg == {"company": "Co A", "api_key": ""}

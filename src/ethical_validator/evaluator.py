@@ -3,10 +3,9 @@ import os
 import re
 from langchain_openai import ChatOpenAI
 
-def evaluate_esg_risk(company: str, news: str, accumulated_knowledge: str = "") -> tuple[int, str]:
-    api_key = os.getenv("OPENROUTER_API_KEY")
+def evaluate_esg_risk(company: str, news: str, accumulated_knowledge: str = "", api_key: str = "") -> tuple[int, str]:
     if not api_key:
-        raise RuntimeError("OPENROUTER_API_KEY not found in environment.")
+        raise RuntimeError("api_key is required.")
 
     llm = ChatOpenAI(
         model="nvidia/nemotron-3-super-120b-a12b:free",

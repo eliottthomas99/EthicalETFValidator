@@ -12,6 +12,7 @@ class CompanyState(TypedDict):
     score: int
     summary: str
     error: str
+    api_key: str
 
 def research_node(state: CompanyState):
     try:
@@ -23,7 +24,7 @@ def research_node(state: CompanyState):
         news_text = "\n---\n".join([r.get("body", "") for r in news_results])
 
         # Update knowledge base with structured results
-        add_news_items(state["company"], news_results)
+        add_news_items(state["company"], news_results, api_key=state.get("api_key", ""))
         accumulated = get_accumulated_context(state["company"])
 
         return {
@@ -40,7 +41,7 @@ def evaluate_node(state: CompanyState):
         company = state["company"]
         fresh_news = state.get("news", "")
         accumulated = state.get("accumulated_knowledge", "")
-        score, summary = evaluate_esg_risk(company, fresh_news, accumulated)
+        score, summary = evaluate_esg_risk(company, fresh_news, accumulated, api_key=state.get("api_key", ""))
         return {"score": score, "summary": summary}
     except Exception as e:
         return {"error": str(e)}

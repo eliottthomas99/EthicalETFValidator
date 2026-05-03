@@ -1,8 +1,11 @@
 import os
+import traceback
 
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
+
+from ethical_validator.etf_graph import app as etf_app
 
 app = FastAPI()
 
@@ -12,12 +15,24 @@ class AnalyzeRequest(BaseModel):
 
 @app.post("/api/analyze")
 def analyze(request: AnalyzeRequest):
-    # TODO: Wire to actual pipeline
-    return {
-        "isin": request.isin,
-        "message": "Hello from Ethical ETF Validator!",
-        "status": "Pipeline not yet wired — this is a test response"
-    }
+    try:
+        initial_state = {
+            "ticker": request.isin,
+            "api_key": request.api_key
+        }
+        final_state = etf_app.invoke(initial_state)
+
+        return {
+            "isin": request.isin,
+            "holdings": final_state.get("holdings", []),
+            "company_results": final_state.get("company_results", []),
+            "report": final_state.get("final_report", "")
+        }
+    except Exception as e:
+        return {
+            "error": str(e),
+            "detail": traceback.format_exc()
+        }
 
 @app.get("/api/health")
 def health_check():
